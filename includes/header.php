@@ -10,7 +10,46 @@ $isUserLoggedIn = isLoggedIn();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?? 'SmartBuild Developers'; ?> - Building Dreams, Shaping Skylines</title>
+    <title><?php echo $pageTitle ?? 'SmartBuild Developers'; ?> - Best Construction Company in Nagpur | Building Dreams, Shaping Skylines</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<?php echo $metaDescription ?? 'SmartBuild Developers - Leading construction company in Nagpur, Maharashtra. Expert builders offering residential, commercial construction, plot development, and interior design services. Trusted by 500+ clients in Nagpur.'; ?>">
+    <meta name="keywords" content="<?php echo $metaKeywords ?? 'construction company Nagpur, builders in Nagpur, residential construction Nagpur, commercial construction Nagpur, plot booking Nagpur, interior design Nagpur, best builders Nagpur Maharashtra, construction services Nagpur, real estate Nagpur, property developers Nagpur'; ?>">
+    <meta name="author" content="SmartBuild Developers">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    
+    <!-- Geo Tags for Local SEO -->
+    <meta name="geo.region" content="IN-MH">
+    <meta name="geo.placename" content="Nagpur">
+    <meta name="geo.position" content="21.1458;79.0882">
+    <meta name="ICBM" content="21.1458, 79.0882">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo baseUrl($_SERVER['REQUEST_URI'] ?? ''); ?>">
+    <meta property="og:title" content="<?php echo $pageTitle ?? 'SmartBuild Developers'; ?> - Best Construction Company in Nagpur">
+    <meta property="og:description" content="<?php echo $metaDescription ?? 'Leading construction company in Nagpur offering residential, commercial construction, and plot development services.'; ?>">
+    <meta property="og:image" content="<?php echo asset('images/og-image.jpg'); ?>">
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:site_name" content="SmartBuild Developers">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?php echo baseUrl($_SERVER['REQUEST_URI'] ?? ''); ?>">
+    <meta name="twitter:title" content="<?php echo $pageTitle ?? 'SmartBuild Developers'; ?> - Best Construction Company in Nagpur">
+    <meta name="twitter:description" content="<?php echo $metaDescription ?? 'Leading construction company in Nagpur offering residential, commercial construction, and plot development services.'; ?>">
+    <meta name="twitter:image" content="<?php echo asset('images/og-image.jpg'); ?>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo baseUrl($_SERVER['REQUEST_URI'] ?? ''); ?>">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="<?php echo asset('images/favicon.ico'); ?>">
+    <link rel="apple-touch-icon" href="<?php echo asset('images/apple-touch-icon.png'); ?>">
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,6 +66,71 @@ $isUserLoggedIn = isLoggedIn();
     <?php if (isset($additionalCSS)): ?>
         <?php echo $additionalCSS; ?>
     <?php endif; ?>
+    
+    <!-- Structured Data / Schema.org for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GeneralContractor",
+      "name": "SmartBuild Developers",
+      "image": "<?php echo asset('images/logo.png'); ?>",
+      "@id": "<?php echo baseUrl(); ?>",
+      "url": "<?php echo baseUrl(); ?>",
+      "telephone": "+91-712-XXXXXXX",
+      "priceRange": "₹₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Construction Avenue, Civil Lines",
+        "addressLocality": "Nagpur",
+        "addressRegion": "Maharashtra",
+        "postalCode": "440001",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 21.1458,
+        "longitude": 79.0882
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://facebook.com/smartbuild",
+        "https://twitter.com/smartbuild",
+        "https://instagram.com/smartbuild",
+        "https://linkedin.com/company/smartbuild"
+      ],
+      "areaServed": {
+        "@type": "City",
+        "name": "Nagpur",
+        "@id": "https://en.wikipedia.org/wiki/Nagpur"
+      },
+      "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 21.1458,
+          "longitude": 79.0882
+        },
+        "geoRadius": "50000"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "500"
+      }
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->

@@ -3,6 +3,8 @@ require_once 'includes/session.php';
 require_once 'includes/helpers.php';
 
 $pageTitle = 'About Us';
+$metaDescription = 'SmartBuild Developers - Nagpur\'s trusted construction company since 2015. Serving Civil Lines, Dharampeth, Sadar, and all areas of Nagpur with 150+ completed projects. Expert builders in Maharashtra.';
+$metaKeywords = 'about SmartBuild Nagpur, construction company Nagpur history, builders Nagpur team, Nagpur construction services, best construction company Nagpur, building contractors Nagpur Maharashtra';
 include 'includes/header.php';
 ?>
 
@@ -10,7 +12,11 @@ include 'includes/header.php';
 <section class="page-header bg-primary text-white py-5">
     <div class="container">
         <h1 class="display-4 fw-bold">About SmartBuild Developers</h1>
-        <p class="lead">Building Excellence Since Day One</p>
+        <p class="lead">Nagpur's Premier Construction Company - Building Excellence Since 2015</p>
+        <div class="mt-3">
+            <span class="badge bg-warning text-dark me-2"><i class="fas fa-map-marker-alt"></i> Based in Nagpur, Maharashtra</span>
+            <span class="badge bg-light text-dark"><i class="fas fa-building"></i> 150+ Projects in Nagpur</span>
+        </div>
     </div>
 </section>
 
@@ -20,8 +26,8 @@ include 'includes/header.php';
         <div class="row align-items-center mb-5">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-4">Our Mission</h2>
-                <p class="lead text-muted">To deliver exceptional construction solutions that exceed client expectations through innovation, quality craftsmanship, and unwavering commitment to excellence.</p>
-                <p>We believe in building not just structures, but lasting relationships with our clients. Every project is an opportunity to showcase our dedication to quality, safety, and sustainability.</p>
+                <p class="lead text-muted">To be Nagpur's most trusted construction partner, delivering exceptional construction solutions that exceed client expectations through innovation, quality craftsmanship, and unwavering commitment to excellence.</p>
+                <p>We believe in building not just structures, but lasting relationships with our clients across Nagpur and Vidarbha region. Every project is an opportunity to showcase our dedication to quality, safety, and sustainability while contributing to Nagpur's growth.</p>
             </div>
             <div class="col-lg-6 text-center">
                 <i class="fas fa-bullseye fa-10x text-primary" style="opacity: 0.1;"></i>
@@ -31,8 +37,8 @@ include 'includes/header.php';
         <div class="row align-items-center">
             <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-4">Our Vision</h2>
-                <p class="lead text-muted">To be the most trusted and innovative construction company, shaping skylines and transforming communities across the region.</p>
-                <p>We envision a future where every building we construct stands as a testament to quality, sustainability, and architectural excellence, contributing to better living and working environments.</p>
+                <p class="lead text-muted">To be the most trusted and innovative construction company in Nagpur and Central India, shaping skylines and transforming communities across Maharashtra.</p>
+                <p>We envision a future where every building we construct in Nagpur stands as a testament to quality, sustainability, and architectural excellence, contributing to better living and working environments for Nagpur residents and making our city proud.</p>
             </div>
             <div class="col-lg-6 order-lg-1 text-center">
                 <i class="fas fa-eye fa-10x text-warning" style="opacity: 0.1;"></i>
@@ -101,9 +107,9 @@ include 'includes/header.php';
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="badge bg-primary me-3">2015</span>
-                                    <h5 class="mb-0 fw-bold">Company Founded</h5>
+                                    <h5 class="mb-0 fw-bold">Company Founded in Nagpur</h5>
                                 </div>
-                                <p class="text-muted mb-0">SmartBuild Developers was established with a vision to revolutionize the construction industry.</p>
+                                <p class="text-muted mb-0">SmartBuild Developers was established in Nagpur with a vision to revolutionize the construction industry in Central India.</p>
                             </div>
                         </div>
                     </div>
@@ -113,9 +119,9 @@ include 'includes/header.php';
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="badge bg-primary me-3">2017</span>
-                                    <h5 class="mb-0 fw-bold">First Major Project</h5>
+                                    <h5 class="mb-0 fw-bold">First Major Project in Nagpur</h5>
                                 </div>
-                                <p class="text-muted mb-0">Completed our first commercial tower, establishing our reputation for quality and reliability.</p>
+                                <p class="text-muted mb-0">Completed our first commercial tower in Civil Lines, Nagpur, establishing our reputation for quality and reliability across the city.</p>
                             </div>
                         </div>
                     </div>
@@ -125,9 +131,9 @@ include 'includes/header.php';
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="badge bg-primary me-3">2020</span>
-                                    <h5 class="mb-0 fw-bold">100+ Projects Milestone</h5>
+                                    <h5 class="mb-0 fw-bold">100+ Projects in Nagpur</h5>
                                 </div>
-                                <p class="text-muted mb-0">Celebrated the completion of over 100 successful projects across residential and commercial sectors.</p>
+                                <p class="text-muted mb-0">Celebrated the completion of over 100 successful projects across Nagpur's residential and commercial sectors, from Dharampeth to Pratap Nagar.</p>
                             </div>
                         </div>
                     </div>
@@ -149,10 +155,56 @@ include 'includes/header.php';
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="badge bg-dark me-3">2024</span>
-                                    <h5 class="mb-0 fw-bold">Expanding Horizons</h5>
+                                    <h5 class="mb-0 fw-bold">Expanding Across Vidarbha</h5>
                                 </div>
-                                <p class="mb-0">Continuing to grow and innovate, serving more clients and building better communities.</p>
+                                <p class="mb-0">Continuing to grow across Nagpur and Vidarbha region, serving more clients and building better communities in Maharashtra.</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Nagpur Section -->
+<section class="py-5 bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="row align-items-center text-white">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-4">Why We Love Nagpur</h2>
+                <p class="lead mb-3">Nagpur - The Heart of India, and the heart of our business!</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> <strong>Strategic Location:</strong> Centrally located in India, making it the perfect hub for growth</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> <strong>Orange City:</strong> Known for its rich culture, heritage, and warm people</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> <strong>Growing Economy:</strong> Rapid infrastructure development and business opportunities</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> <strong>Smart City:</strong> Part of India's Smart Cities Mission with modern amenities</li>
+                    <li class="mb-3"><i class="fas fa-check-circle me-2"></i> <strong>Our Home:</strong> Proud to serve the community that has supported us since 2015</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="bg-white rounded p-4 shadow-lg">
+                    <h4 class="text-dark mb-3">Our Nagpur Presence</h4>
+                    <div class="row text-dark">
+                        <div class="col-6 mb-3">
+                            <i class="fas fa-building fa-3x text-primary mb-2"></i>
+                            <h5 class="fw-bold">150+</h5>
+                            <small>Projects Completed</small>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <i class="fas fa-users fa-3x text-warning mb-2"></i>
+                            <h5 class="fw-bold">500+</h5>
+                            <small>Nagpur Clients</small>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-map-marked-alt fa-3x text-success mb-2"></i>
+                            <h5 class="fw-bold">15+</h5>
+                            <small>Areas Covered</small>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-award fa-3x text-info mb-2"></i>
+                            <h5 class="fw-bold">4.8/5</h5>
+                            <small>Customer Rating</small>
                         </div>
                     </div>
                 </div>
@@ -165,8 +217,8 @@ include 'includes/header.php';
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">Meet Our Team</h2>
-            <p class="lead text-muted">The experts behind our success</p>
+            <h2 class="display-5 fw-bold">Meet Our Nagpur Team</h2>
+            <p class="lead text-muted">Local experts dedicated to building Nagpur's future</p>
         </div>
         
         <div class="row">

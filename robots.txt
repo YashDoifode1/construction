@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and user private areas
+Disallow: /admin/
+Disallow: /user/profile.php
+Disallow: /user/bookings.php
+Disallow: /includes/
+Disallow: /vendor/
+Disallow: /logs/
+
+# Allow public pages
+Allow: /user/login.php
+Allow: /user/register.php
+Allow: /user/forgot-password.php
+
+# Sitemap location
+Sitemap: http://localhost/const/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
