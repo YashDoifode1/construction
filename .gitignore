@@ -1,0 +1,107 @@
+# SmartBuild Developers - Git Ignore File
+
+# Configuration files with sensitive data
+config.php
+.env
+.env.local
+
+# Database backups
+*.sql
+*.sql.gz
+database/backups/
+
+# Uploaded files
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+logs/
+*.log
+error_log
+
+# Cache
+cache/
+*.cache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Composer
+vendor/
+composer.lock
+
+# NPM
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Build files
+dist/
+build/
+
+# Session files
+sessions/
+*.sess
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Documentation build
+docs/_build/
+
+# Test coverage
+coverage/
+.coverage
+
+# Environment
+.env.backup
+.phpunit.result.cache
+
+# Security
+*.pem
+*.key
+*.crt
+*.csr
+
+# Keep empty directories
+!.gitkeep
