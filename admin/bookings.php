@@ -74,9 +74,12 @@ include 'includes/header.php';
                                 <td><?php echo getStatusBadge($booking['status']); ?></td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $booking['id']; ?>">
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $booking['id']; ?>" title="View Details">
                                             <i class="fas fa-eye"></i>
                                         </button>
+                                        <a href="<?php echo baseUrl('admin/edit-booking.php?id=' . $booking['id']); ?>" class="btn btn-primary" title="Edit Booking">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                         <?php if ($booking['status'] === 'pending'): ?>
                                         <a href="?action=update_status&id=<?php echo $booking['id']; ?>&status=approved" class="btn btn-success" title="Approve">
                                             <i class="fas fa-check"></i>

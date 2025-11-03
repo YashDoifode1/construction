@@ -93,12 +93,18 @@ if (isPost()) {
                                 </div>
                             </div>
                             
-                            <div class="mb-4">
+                            <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
+                            </div>
+                            
+                            <div class="mb-4 text-end">
+                                <a href="<?php echo baseUrl('user/forgot-password.php'); ?>" class="text-decoration-none small">
+                                    Forgot Password?
+                                </a>
                             </div>
                             
                             <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">

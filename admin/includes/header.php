@@ -105,6 +105,9 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     
                     <hr class="text-white-50 my-3">
                     
+                    <a href="<?php echo baseUrl('admin/settings.php'); ?>" class="nav-link <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
                     <a href="<?php echo baseUrl('index.php'); ?>" class="nav-link" target="_blank">
                         <i class="fas fa-globe"></i> View Website
                     </a>

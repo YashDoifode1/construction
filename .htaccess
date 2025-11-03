@@ -101,10 +101,10 @@ Options -Indexes
     ExpiresDefault "access plus 1 week"
 </IfModule>
 
-# Custom Error Pages (Optional - create these pages)
-# ErrorDocument 404 /const/404.php
-# ErrorDocument 403 /const/403.php
-# ErrorDocument 500 /const/500.php
+# Custom Error Pages
+ErrorDocument 404 /const/errors/404.php
+ErrorDocument 500 /const/errors/500.php
+ErrorDocument 501 /const/errors/501.php
 
 # Prevent hotlinking of images (Optional)
 # <IfModule mod_rewrite.c>

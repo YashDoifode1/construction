@@ -210,7 +210,218 @@ function getStatusBadge($status) {
         'read' => '<span class="badge bg-secondary">Read</span>',
         'ongoing' => '<span class="badge bg-info">Ongoing</span>',
         'completed' => '<span class="badge bg-success">Completed</span>',
+        'reviewed' => '<span class="badge bg-info">Reviewed</span>',
+        'quoted' => '<span class="badge bg-primary">Quoted</span>',
+        'closed' => '<span class="badge bg-secondary">Closed</span>',
     ];
     
     return $badges[$status] ?? '<span class="badge bg-secondary">' . ucfirst($status) . '</span>';
+}
+
+/**
+ * Generate password reset token
+ */
+function generateResetToken() {
+    return bin2hex(random_bytes(32));
+}
+
+/**
+ * Create password reset request and send email
+ */
+function createPasswordReset($email, $sendEmail = true) {
+    $token = generateResetToken();
+    $sql = "INSERT INTO password_resets (email, token) VALUES (?, ?)";
+    $result = execute($sql, [$email, $token]);
+    
+    if ($result && $sendEmail) {
+        // Load mail helper if not already loaded
+        if (!function_exists('sendPasswordResetEmail')) {
+            require_once __DIR__ . '/mail.php';
+        }
+        
+        // Send password reset email
+        $emailSent = sendPasswordResetEmail($email, $token);
+        
+        // Return token even if email fails (for debugging)
+        return $token;
+    }
+    
+    return $result ? $token : false;
+}
+
+/**
+ * Verify password reset token
+ */
+function verifyResetToken($token) {
+    // Token expires after 30 minutes
+    $sql = "SELECT * FROM password_resets WHERE token = ? AND created_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)";
+    return queryOne($sql, [$token]);
+}
+
+/**
+ * Delete password reset token
+ */
+function deleteResetToken($token) {
+    execute("DELETE FROM password_resets WHERE token = ?", [$token]);
+}
+
+/**
+ * Clean expired reset tokens
+ */
+function cleanExpiredTokens() {
+    execute("DELETE FROM password_resets WHERE created_at < DATE_SUB(NOW(), INTERVAL 30 MINUTE)");
+}
+
+/**
+ * Upload image file with validation
+ */
+function uploadImage($file, $uploadDir = 'uploads/', $allowedTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif']) {
+    // Check if file was uploaded
+    if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
+        return ['success' => false, 'message' => 'No file uploaded'];
+    }
+    
+    // Check for upload errors
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return ['success' => false, 'message' => 'Upload error occurred'];
+    }
+    
+    // Validate file size (max 2MB)
+    $maxSize = 2 * 1024 * 1024; // 2MB
+    if ($file['size'] > $maxSize) {
+        return ['success' => false, 'message' => 'File size exceeds 2MB limit'];
+    }
+    
+    // Get file extension
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    
+    // Validate file type
+    if (!in_array($extension, $allowedTypes)) {
+        return ['success' => false, 'message' => 'Invalid file type. Allowed: ' . implode(', ', $allowedTypes)];
+    }
+    
+    // Validate MIME type
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+    
+    $allowedMimes = [
+        'image/jpeg' => ['jpg', 'jpeg'],
+        'image/png' => ['png'],
+        'image/webp' => ['webp'],
+        'image/gif' => ['gif']
+    ];
+    
+    $validMime = false;
+    foreach ($allowedMimes as $mime => $exts) {
+        if ($mimeType === $mime && in_array($extension, $exts)) {
+            $validMime = true;
+            break;
+        }
+    }
+    
+    if (!$validMime) {
+        return ['success' => false, 'message' => 'Invalid file format'];
+    }
+    
+    // Create upload directory if it doesn't exist
+    $fullUploadDir = __DIR__ . '/../' . $uploadDir;
+    if (!is_dir($fullUploadDir)) {
+        mkdir($fullUploadDir, 0755, true);
+    }
+    
+    // Generate unique filename
+    $filename = uniqid() . '_' . time() . '.' . $extension;
+    $destination = $fullUploadDir . $filename;
+    
+    // Move uploaded file
+    if (move_uploaded_file($file['tmp_name'], $destination)) {
+        return [
+            'success' => true,
+            'filename' => $filename,
+            'path' => $uploadDir . $filename,
+            'message' => 'File uploaded successfully'
+        ];
+    }
+    
+    return ['success' => false, 'message' => 'Failed to move uploaded file'];
+}
+
+/**
+ * Delete uploaded file
+ */
+function deleteUploadedFile($filepath) {
+    $fullPath = __DIR__ . '/../' . $filepath;
+    if (file_exists($fullPath) && is_file($fullPath)) {
+        return unlink($fullPath);
+    }
+    return false;
+}
+
+/**
+ * Get site settings from database
+ */
+function getSiteSettings() {
+    static $settings = null;
+    
+    if ($settings === null) {
+        $settings = queryOne("SELECT * FROM settings LIMIT 1");
+        if (!$settings) {
+            // Return default settings if none exist
+            $settings = [
+                'site_name' => 'SmartBuild Developers',
+                'tagline' => 'Building Dreams, Shaping Skylines',
+                'logo' => null,
+                'favicon' => null,
+                'footer_text' => '© 2024 SmartBuild Developers. All rights reserved.',
+                'contact_email' => 'info@smartbuild.com',
+                'contact_phone' => '+1-800-SMARTBUILD'
+            ];
+        }
+    }
+    
+    return $settings;
+}
+
+/**
+ * Update site settings
+ */
+function updateSiteSettings($data) {
+    $sql = "UPDATE settings SET 
+            site_name = ?, 
+            tagline = ?, 
+            footer_text = ?, 
+            contact_email = ?, 
+            contact_phone = ?,
+            facebook_url = ?,
+            twitter_url = ?,
+            instagram_url = ?,
+            linkedin_url = ?
+            WHERE id = 1";
+    
+    return execute($sql, [
+        $data['site_name'],
+        $data['tagline'],
+        $data['footer_text'],
+        $data['contact_email'],
+        $data['contact_phone'],
+        $data['facebook_url'] ?? null,
+        $data['twitter_url'] ?? null,
+        $data['instagram_url'] ?? null,
+        $data['linkedin_url'] ?? null
+    ]);
+}
+
+/**
+ * Update site logo
+ */
+function updateSiteLogo($filename) {
+    return execute("UPDATE settings SET logo = ? WHERE id = 1", [$filename]);
+}
+
+/**
+ * Update site favicon
+ */
+function updateSiteFavicon($filename) {
+    return execute("UPDATE settings SET favicon = ? WHERE id = 1", [$filename]);
 }

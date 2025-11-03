@@ -30,10 +30,10 @@ define('ALLOWED_IMAGE_TYPES', ['jpg', 'jpeg', 'png', 'gif']);
 define('ALLOWED_DOCUMENT_TYPES', ['pdf', 'doc', 'docx']);
 
 // Email Configuration (for future use)
-define('SMTP_HOST', 'smtp.example.com');
+define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USER', 'noreply@smartbuild.com');
-define('SMTP_PASS', 'your-password');
+define('SMTP_USER', 'yashdoifode1439@gmail.com');
+define('SMTP_PASS', 'mvub juzg shso fhpa');
 define('SMTP_FROM_EMAIL', 'noreply@smartbuild.com');
 define('SMTP_FROM_NAME', 'SmartBuild Developers');
 

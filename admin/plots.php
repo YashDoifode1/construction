@@ -7,6 +7,11 @@ $pageTitle = 'Manage Plots';
 // Handle delete
 if (get('action') === 'delete' && get('id')) {
     $id = get('id');
+    // Get plot to delete image
+    $plot = queryOne("SELECT image FROM plots WHERE id = ?", [$id]);
+    if ($plot && $plot['image']) {
+        deleteUploadedFile($plot['image']);
+    }
     execute("DELETE FROM plots WHERE id = ?", [$id]);
     setFlash('success', 'Plot deleted successfully');
     redirect(baseUrl('admin/plots.php'));
@@ -28,15 +33,43 @@ if (isPost()) {
     } elseif (empty($plotNo) || empty($size) || empty($price) || empty($location)) {
         setFlash('error', 'Please fill all required fields');
     } else {
+        $imagePath = null;
+        
+        // Handle image upload
+        if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $uploadResult = uploadImage($_FILES['image'], 'uploads/plots/');
+            
+            if ($uploadResult['success']) {
+                $imagePath = $uploadResult['path'];
+                
+                // Delete old image if updating
+                if ($id) {
+                    $oldPlot = queryOne("SELECT image FROM plots WHERE id = ?", [$id]);
+                    if ($oldPlot && $oldPlot['image']) {
+                        deleteUploadedFile($oldPlot['image']);
+                    }
+                }
+            } else {
+                setFlash('error', $uploadResult['message']);
+                redirect(baseUrl('admin/plots.php'));
+                exit;
+            }
+        }
+        
         if ($id) {
             // Update
-            $sql = "UPDATE plots SET plot_no = ?, size = ?, price = ?, location = ?, description = ?, status = ? WHERE id = ?";
-            execute($sql, [$plotNo, $size, $price, $location, $description, $status, $id]);
+            if ($imagePath) {
+                $sql = "UPDATE plots SET plot_no = ?, size = ?, price = ?, location = ?, description = ?, status = ?, image = ? WHERE id = ?";
+                execute($sql, [$plotNo, $size, $price, $location, $description, $status, $imagePath, $id]);
+            } else {
+                $sql = "UPDATE plots SET plot_no = ?, size = ?, price = ?, location = ?, description = ?, status = ? WHERE id = ?";
+                execute($sql, [$plotNo, $size, $price, $location, $description, $status, $id]);
+            }
             setFlash('success', 'Plot updated successfully');
         } else {
             // Insert
-            $sql = "INSERT INTO plots (plot_no, size, price, location, description, status) VALUES (?, ?, ?, ?, ?, ?)";
-            execute($sql, [$plotNo, $size, $price, $location, $description, $status]);
+            $sql = "INSERT INTO plots (plot_no, size, price, location, description, status, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            execute($sql, [$plotNo, $size, $price, $location, $description, $status, $imagePath]);
             setFlash('success', 'Plot added successfully');
         }
         redirect(baseUrl('admin/plots.php'));
@@ -69,12 +102,12 @@ include 'includes/header.php';
                 <table class="table table-hover">
                     <thead class="table-light">
                         <tr>
+                            <th>Image</th>
                             <th>Plot No</th>
                             <th>Size</th>
                             <th>Price</th>
                             <th>Location</th>
                             <th>Status</th>
-                            <th>Created</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -86,12 +119,20 @@ include 'includes/header.php';
                         <?php else: ?>
                             <?php foreach ($plots as $plot): ?>
                             <tr>
+                                <td>
+                                    <?php if ($plot['image']): ?>
+                                        <img src="<?php echo baseUrl($plot['image']); ?>" alt="Plot" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                    <?php else: ?>
+                                        <div style="width: 50px; height: 50px; background: #e9ecef; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                    <?php endif; ?>
+                                </td>
                                 <td><strong><?php echo htmlspecialchars($plot['plot_no']); ?></strong></td>
                                 <td><?php echo htmlspecialchars($plot['size']); ?></td>
                                 <td><?php echo formatCurrency($plot['price']); ?></td>
                                 <td><?php echo htmlspecialchars($plot['location']); ?></td>
                                 <td><?php echo getStatusBadge($plot['status']); ?></td>
-                                <td><?php echo formatDate($plot['created_at']); ?></td>
                                 <td>
                                     <a href="?action=edit&id=<?php echo $plot['id']; ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
@@ -114,7 +155,7 @@ include 'includes/header.php';
 <div class="modal fade" id="plotModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <?php echo csrfField(); ?>
                 <input type="hidden" name="id" value="<?php echo $editPlot['id'] ?? ''; ?>">
                 
@@ -124,6 +165,21 @@ include 'includes/header.php';
                 </div>
                 
                 <div class="modal-body">
+                    <?php if ($editPlot && $editPlot['image']): ?>
+                    <div class="mb-3">
+                        <label class="form-label">Current Image</label>
+                        <div>
+                            <img src="<?php echo baseUrl($editPlot['image']); ?>" alt="Plot" class="img-thumbnail" style="max-width: 200px;">
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Plot Image <?php echo $editPlot ? '(Upload new to replace)' : ''; ?></label>
+                        <input type="file" class="form-control" name="image" accept="image/jpeg,image/png,image/webp,image/gif">
+                        <small class="text-muted">Allowed: JPG, PNG, WEBP, GIF. Max size: 2MB</small>
+                    </div>
+                    
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Plot Number *</label>

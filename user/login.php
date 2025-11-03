@@ -74,9 +74,14 @@ include '../includes/header.php';
                                 </div>
                             </div>
                             
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember">
-                                <label class="form-check-label" for="remember">Remember me</label>
+                            <div class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember">
+                                    <label class="form-check-label" for="remember">Remember me</label>
+                                </div>
+                                <a href="<?php echo baseUrl('user/forgot-password.php'); ?>" class="text-decoration-none small">
+                                    Forgot Password?
+                                </a>
                             </div>
                             
                             <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
